@@ -1,57 +1,144 @@
+/* Police et reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f9;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #f8f4e3, #e0f7fa);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
+/* Container */
 .container {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  width: 300px;
-}
-
-h1 {
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
+  padding: 25px 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 400px;
   text-align: center;
-  margin-bottom: 20px;
 }
 
+/* Titre */
+h1 {
+  margin-bottom: 25px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Input + button */
 .todo-input {
   display: flex;
-  gap: 5px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 #new-task {
   flex: 1;
-  padding: 8px;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+#new-task:focus {
+  border-color: #80cbc4;
+  box-shadow: 0 0 8px rgba(128,203,196,0.4);
 }
 
 button {
-  padding: 8px 12px;
+  padding: 10px 15px;
+  border: none;
+  background: #80cbc4;
+  color: white;
+  font-weight: 600;
+  border-radius: 15px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
+button:hover {
+  background: #4db6ac;
+}
+
+/* Todo list */
 ul {
   list-style: none;
   padding: 0;
-  margin-top: 20px;
 }
 
 li {
-  padding: 8px;
-  background: #eee;
-  margin-bottom: 8px;
-  border-radius: 5px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  background: #f0f4f8;
+  border-radius: 15px;
+  box-shadow: 0 6px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-li.done {
+li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+}
+
+li.done span {
   text-decoration: line-through;
-  color: gray;
+  color: #999;
+}
+
+/* Avatars */
+li img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+/* Bouton supprimer */
+li button {
+  background: #ff8a65;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+li button:hover {
+  background: #ff5722;
+}
+
+/* Animations */
+li.added {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* Responsive */
+@media(max-width: 450px){
+  .container {
+    padding: 20px;
+  }
+  #new-task, button {
+    font-size: 14px;
+  }
 }
 
