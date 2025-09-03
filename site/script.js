@@ -1,30 +1,45 @@
-async function loadTasks() {
-  const res = await fetch("tasks.json");
-  const tasks = await res.json();
-  const list = document.getElementById("task-list");
+const input = document.getElementById("new-task");
+const list = document.getElementById("todo-list");
 
+// Charger les tâches sauvegardées
+let todos = JSON.parse(localStorage.getItem("todos")) || [];
+renderTodos();
+
+function addTask() {
+  const task = input.value.trim();
+  if (task) {
+    todos.push({ text: task, done: false });
+    input.value = "";
+    saveAndRender();
+  }
+}
+
+function toggleTask(index) {
+  todos[index].done = !todos[index].done;
+  saveAndRender();
+}
+
+function deleteTask(index) {
+  todos.splice(index, 1);
+  saveAndRender();
+}
+
+function saveAndRender() {
+  localStorage.setItem("todos", JSON.stringify(todos));
+  renderTodos();
+}
+
+function renderTodos() {
   list.innerHTML = "";
-  tasks.forEach((task, i) => {
-    const div = document.createElement("div");
-    div.className = "task" + (task.done ? " done" : "");
-    div.innerHTML = `
-      <input type="checkbox" id="task-${i}" ${task.done ? "checked" : ""}>
-      <label for="task-${i}">${task.title}</label>
-    `;
-    list.appendChild(div);
+  todos.forEach((todo, i) => {
+    const li = document.createElement("li");
+    li.className = todo.done ? "done" : "";
 
-    div.querySelector("input").addEventListener("change", () => {
-      task.done = !task.done;
-      saveTasks(tasks);
-    });
+    li.innerHTML = `
+      <span onclick="toggleTask(${i})">${todo.text}</span>
+      <button onclick="deleteTask(${i})">❌</button>
+    `;
+    list.appendChild(li);
   });
 }
-
-function saveTasks(tasks) {
-  // ⚠️ Sur GitHub Pages on ne peut pas écrire dans un fichier
-  // mais plus tard, on pourra utiliser LocalStorage :
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-loadTasks();
 
